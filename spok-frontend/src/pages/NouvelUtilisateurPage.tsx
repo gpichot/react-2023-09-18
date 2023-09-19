@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./NouvelUtilisateurPage.module.css";
 import FieldInput from "../components/FieldInput";
+import Button from "../components/Button";
 
 type UserCreatePayload = {
   firstName: string;
@@ -56,9 +57,13 @@ export default function NouvelUtilisateurPage() {
         name="email"
         onChange={(e) => change("email", e.currentTarget.value)}
       />
-      <button type="submit" disabled={!isFormValid}>
+      <Button
+        type="submit"
+        disabled={!isFormValid}
+        className={styles.buttonFormulaire}
+      >
         Créer
-      </button>
+      </Button>
     </form>
   );
 }
