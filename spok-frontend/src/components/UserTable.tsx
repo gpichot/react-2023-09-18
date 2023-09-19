@@ -6,7 +6,7 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
-  status: InscriptionStatus;
+  status?: InscriptionStatus;
 }
 
 enum InscriptionStatus {
@@ -42,7 +42,10 @@ export function UserTable(props: UserTableProps) {
       </thead>
       <tbody>
         {props.users.map((user) => (
-          <tr key={user.email} className={StylesStatus[user.status]}>
+          <tr
+            key={user.email}
+            className={StylesStatus[user.status || InscriptionStatus.Demande]}
+          >
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.email}</td>

@@ -1,19 +1,46 @@
 import "./App.css";
-import { UserTable } from "./components/UserTable";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserListPage from "./pages/UserListPage";
+import { BienvenuePage } from "./pages/BienvenuePage";
+import NouvelUtilisateurPage from "./pages/NouvelUtilisateurPage";
 
-const users = [
-  { firstName: "John", lastName: "Doe", email: "john.doe@example.com" },
-  { firstName: "Jane", lastName: "Doe", email: "jane.doe@example.com" },
-  { firstName: "Jack", lastName: "Doe", email: "Jack.doe@example.com" },
-];
-
-function App() {
+function Root() {
   return (
     <>
-      <h1>Liste des utilisateurs</h1>
-      <UserTable users={users} />
+      <h1>SpokApp</h1>
+      <nav>
+        <a href="/">Accueil</a>
+        <a href="/users">Utilisateurs</a>
+        <a href="/users/form">Créer un utilisateur</a>
+      </nav>
+      <Outlet />
     </>
   );
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <BienvenuePage />,
+      },
+      {
+        path: "/users",
+        element: <UserListPage />,
+      },
+      {
+        path: "/users/form",
+        element: <NouvelUtilisateurPage />,
+      },
+    ],
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;
