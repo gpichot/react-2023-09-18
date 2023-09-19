@@ -1,5 +1,10 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Link,
+} from "react-router-dom";
 import UserListPage from "./pages/UserListPage";
 import { BienvenuePage } from "./pages/BienvenuePage";
 import NouvelUtilisateurPage from "./pages/NouvelUtilisateurPage";
@@ -8,10 +13,17 @@ function Root() {
   return (
     <>
       <h1>SpokApp</h1>
-      <nav>
-        <a href="/">Accueil</a>
-        <a href="/users">Utilisateurs</a>
-        <a href="/users/form">Créer un utilisateur</a>
+      <nav
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "1rem",
+          margin: "1rem",
+        }}
+      >
+        <Link to="/">Accueil</Link>
+        <Link to="/users">Utilisateurs</Link>
+        <Link to="/users/form">Créer un utilisateur</Link>
       </nav>
       <Outlet />
     </>

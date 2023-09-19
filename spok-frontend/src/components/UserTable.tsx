@@ -25,6 +25,9 @@ interface UserTableProps {
   users: User[];
 }
 export function UserTable(props: UserTableProps) {
+  const handleDeleteUser = (user: User) => {
+    console.log("Delete user!", user);
+  };
   return (
     <table
       style={{
@@ -50,7 +53,9 @@ export function UserTable(props: UserTableProps) {
             <td>{user.lastName}</td>
             <td>{user.email}</td>
             <th>
-              <img src={trash} alt="Supprimer" width={32} height={32} />
+              <button onClick={() => handleDeleteUser(user)}>
+                <img src={trash} alt="Supprimer" width={32} height={32} />
+              </button>
             </th>
           </tr>
         ))}
