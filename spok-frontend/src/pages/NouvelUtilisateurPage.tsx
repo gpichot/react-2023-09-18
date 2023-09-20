@@ -1,40 +1,11 @@
-import React from "react";
 import styles from "./NouvelUtilisateurPage.module.css";
 import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
-
-type UserCreatePayload = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
-
-function checkIsFormValid({
-  firstName,
-  lastName,
-  email,
-}: UserCreatePayload): boolean {
-  return (
-    firstName.length >= 2 &&
-    lastName.length >= 2 &&
-    email.length >= 6 &&
-    /\S+@\S+\.\S+/.test(email)
-  );
-}
+import useUserForm from "../hooks/useUserForm";
+import { useQuery } from "@tanstack/react-query";
 
 export default function NouvelUtilisateurPage() {
-  const [user, setUser] = React.useState<UserCreatePayload>({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
-
-  const isFormValid = checkIsFormValid(user);
-  const change = (prop: string, value: string) => {
-    const newUser = { ...user, [prop]: value };
-    setUser(newUser);
-  };
-
+  const { change, isFormValid } = useUserForm();
   return (
     <form>
       <FieldInput

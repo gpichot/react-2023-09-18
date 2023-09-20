@@ -1,4 +1,3 @@
-import React from "react";
 import trash from "../../public/trash.png";
 
 import styles from "./UserTable.module.css";

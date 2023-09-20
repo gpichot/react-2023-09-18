@@ -4,10 +4,14 @@ import {
   RouterProvider,
   Outlet,
   Link,
+  Navigate,
 } from "react-router-dom";
 import UserListPage from "./pages/UserListPage";
 import { BienvenuePage } from "./pages/BienvenuePage";
 import NouvelUtilisateurPage from "./pages/NouvelUtilisateurPage";
+import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function Root() {
   return (
@@ -28,6 +32,18 @@ function Root() {
       <Outlet />
     </>
   );
+}
+
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const [token, setToken] = React.useState(() => {
+    return window.localStorage.getItem("token");
+  });
+  void setToken;
+
+  if (token !== "adminToken") {
+    return <Navigate to="/" />;
+  }
+  return children;
 }
 
 const router = createBrowserRouter([
@@ -51,8 +67,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
