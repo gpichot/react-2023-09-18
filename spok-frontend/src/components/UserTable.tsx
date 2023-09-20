@@ -1,7 +1,9 @@
 import trash from "../../public/trash.png";
+import useDeleteUserMutation from "../query-hooks/useDeleteUserMutation";
 
 import styles from "./UserTable.module.css";
 interface User {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -24,8 +26,10 @@ interface UserTableProps {
   users: User[];
 }
 export function UserTable(props: UserTableProps) {
+  const deleteUserMutation = useDeleteUserMutation();
+
   const handleDeleteUser = (user: User) => {
-    console.log("Delete user!", user);
+    deleteUserMutation.mutate(user.id);
   };
   return (
     <table

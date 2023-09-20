@@ -1,38 +1,53 @@
 import styles from "./NouvelUtilisateurPage.module.css";
 import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
-import useUserForm from "../hooks/useUserForm";
-import { useQuery } from "@tanstack/react-query";
+import useCreateUserMutation from "../query-hooks/useCreateUserMutation";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NouvelUtilisateurPage() {
-  const { change, isFormValid } = useUserForm();
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  // const { change, isFormValid, user } = useUserForm();
+  const navigate = useNavigate();
+
+  const createUserMutation = useCreateUserMutation();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const user = { firstName, lastName, email };
+    createUserMutation.mutate(user, {
+      onSuccess: () => {
+        navigate("/users");
+      },
+    });
+  };
+  console.log(createUserMutation.isLoading);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <FieldInput
         label="Prénom"
         id="firstName"
         name="firstName"
         placeholder="Marc"
-        onChange={(e) => change("firstName", e.currentTarget.value)}
+        onChange={(e) => setFirstName(e.currentTarget.value)}
       />
       <FieldInput
         label="Nom"
         id="lastName"
         name="lastName"
-        onChange={(e) => change("lastName", e.currentTarget.value)}
+        onChange={(e) => setLastName(e.currentTarget.value)}
       />
       <FieldInput
         label="Email"
         type="email"
         id="email"
         name="email"
-        onChange={(e) => change("email", e.currentTarget.value)}
+        onChange={(e) => setEmail(e.currentTarget.value)}
       />
-      <Button
-        type="submit"
-        disabled={!isFormValid}
-        className={styles.buttonFormulaire}
-      >
+      <Button type="submit" className={styles.buttonFormulaire}>
         Créer
       </Button>
     </form>

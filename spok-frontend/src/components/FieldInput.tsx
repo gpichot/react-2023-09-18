@@ -2,6 +2,7 @@ import styles from "./FieldInput.module.css";
 
 export interface FieldInputProps
   extends React.ComponentPropsWithoutRef<"input"> {
+  /** Label pour le composant */
   label: string;
 }
 
