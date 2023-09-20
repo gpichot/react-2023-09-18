@@ -18,10 +18,17 @@ export class UserController extends Controller {
     @Query() page: number = 1,
     @Query() limit: number = 10
   ): Promise<User[]> {
-    return db.user.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const [results, count] = await Promise.all([
+      db.user.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      db.user.count(),
+    ]);
+
+    this.setHeader("X-Total-Count", count.toString());
+
+    return results;
   }
 
   @Delete("/:id")
